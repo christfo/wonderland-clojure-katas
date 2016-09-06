@@ -8,6 +8,17 @@
         rank ranks]
     [suit rank]))
 
-(defn play-round [player1-card player2-card])
+(defn deal 
+  ( [players] (partition (quot (count cards) players) (shuffle cards)))
+  ( []        (deal 2)))
+
+(defn rank2value [rank]
+  (first (keep-indexed (fn [index item] (when (= rank item) index)) ranks)))
+
+(defn suit2value [suit]
+  (first (keep-indexed (fn [index item] (when (= suit item) index)) suits)))
+
+(defn play-round [ [suite1 rank1] [suite2 rank2] ]
+  (when ()))
 
 (defn play-game [player1-cards player2-cards])
