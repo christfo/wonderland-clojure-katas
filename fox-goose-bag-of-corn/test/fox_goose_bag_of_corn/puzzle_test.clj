@@ -1,4 +1,5 @@
 (ns fox-goose-bag-of-corn.puzzle-test
+  (:use midje.sweet)
   (:require [clojure.test :refer :all]
             [fox-goose-bag-of-corn.puzzle :refer :all]
             [clojure.set]))
@@ -43,3 +44,23 @@
         (reduce validate-move middle-moves)
         (reduce validate-move right-moves )))))
 
+(def test_state [#{:a :b :c :you} #{:d :e :boat} #{:f :g}])
+
+(facts "about things in places"
+       (fact "lh"
+             (lhbank test_state) => #{:a :b :c :you}
+             (cargo (lhbank test_state) ) => #{:a :b :c})
+       (fact "rh"
+             (rhbank test_state) => #{:f :g}
+             (cargo (rhbank test_state )) => #{:f :g}
+             (cargo (rhbank test_state )) => #{:f :g})
+       (fact "boat"
+             (boat test_state) => #{:d :e :boat}
+             (cargo (boat test_state )) => #{:d :e}) )
+
+(facts "about game steps"
+       ; (def test_state [#{:a :b :c :you} #{:d :e :boat} #{:f :g}])
+       (fact "lbank to boat"
+             (moves [#{:a :you} #{:boat} #{}] ) => '( [ #{} #{:boat :a :you} #{} ] ) 
+             ; (moves test_state  ) => '( [ #{} #{:boat :a :you} #{} ] ) 
+             ))
